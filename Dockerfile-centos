@@ -1,0 +1,12 @@
+FROM ubuntu:16.04
+MAINTAINER Benjamin Henrion <zoobab@gmail.com>
+
+RUN echo "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse" >> /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get install -yy virtualbox vagrant vim
+# using OpenWRT image, only 7MB in size
+RUN mkdir -pv /root/vagrant-centos
+WORKDIR /root/vagrant-centos
+RUN vagrant init williamyeh/centos7-docker
+RUN vagrant box add --provider virtualbox williamyeh/centos7-docker 
+COPY vagrant-centos/Vagrantfile /root/vagrant-centos/Vagrantfile
